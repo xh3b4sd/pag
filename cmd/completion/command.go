@@ -9,10 +9,18 @@ import (
 const (
 	name             = "completion"
 	shortDescription = "Generate shell completions."
-	longDescription  = `Generating zsh completion for Oh My Zsh can be done by writing the
+	longDescription  = `Supported positional arguments and respective shell completions are
+as follows.
+
+    bash
+    fish
+    powershell
+    zsh
+
+Generating zsh completion for Oh My Zsh can be done by writing the
 generated completion to the custom plugin folder.
 
-    mkdir -p ~/.oh-my-zsh/custom/plugins/workflow && workflow completion zsh > ~/.oh-my-zsh/custom/plugins/workflow/_workflow
+    mkdir -p ~/.oh-my-zsh/custom/plugins/pag && pag completion zsh > ~/.oh-my-zsh/custom/plugins/pag/_pag
 
 	`
 )
@@ -37,7 +45,7 @@ func New(config Config) (*cobra.Command, error) {
 			Short:                 shortDescription,
 			Long:                  longDescription,
 			DisableFlagsInUseLine: true,
-			ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
+			ValidArgs:             []string{"bash", "fish", "powershell", "zsh"},
 			Args:                  cobra.ExactValidArgs(1),
 			RunE:                  r.Run,
 		}
