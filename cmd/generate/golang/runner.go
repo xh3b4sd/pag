@@ -52,10 +52,6 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 		}
 	}
 
-	// The gRPC tooling is not particularly prudent with file path and file
-	// system management. We need to ensure the configured directory structure
-	// in advance so that the gRPC tooling can generate the language specific
-	// code into that.
 	{
 		l, err := g.Generate()
 		if err != nil {
@@ -63,6 +59,10 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 		}
 
 		for _, c := range l {
+			// The gRPC tooling is not particularly prudent with file path and
+			// file system management. We need to ensure the configured
+			// directory structure in advance so that the gRPC tooling can
+			// generate the language specific code into that.
 			err := os.MkdirAll(c.Directory, os.ModePerm)
 			if err != nil {
 				return tracer.Mask(err)
