@@ -8,7 +8,7 @@ import (
 
 const (
 	name        = "golang"
-	description = "Generate commands for golang code generation based on a gRPC api schema."
+	description = "Generate golang code based on a gRPC api schema."
 )
 
 type Config struct {
