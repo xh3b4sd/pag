@@ -1,16 +1,14 @@
-package generate
+package golang
 
 import (
 	"github.com/spf13/cobra"
 	"github.com/xh3b4sd/logger"
 	"github.com/xh3b4sd/tracer"
-
-	"github.com/xh3b4sd/pag/cmd/generate/golang"
 )
 
 const (
-	name        = "generate"
-	description = "Generate grpc code based on protocol buffer schemas."
+	name        = "golang"
+	description = "Generate golang code based on a gRPC api schema."
 )
 
 type Config struct {
@@ -22,23 +20,12 @@ func New(config Config) (*cobra.Command, error) {
 		return nil, tracer.Maskf(invalidConfigError, "%T.Logger must not be empty", config)
 	}
 
-	var err error
-
-	var golangCmd *cobra.Command
-	{
-		c := golang.Config{
-			Logger: config.Logger,
-		}
-
-		golangCmd, err = golang.New(c)
-		if err != nil {
-			return nil, tracer.Mask(err)
-		}
-	}
-
 	var c *cobra.Command
 	{
+		f := &flag{}
+
 		r := &runner{
+			flag:   f,
 			logger: config.Logger,
 		}
 
@@ -49,7 +36,7 @@ func New(config Config) (*cobra.Command, error) {
 			RunE:  r.Run,
 		}
 
-		c.AddCommand(golangCmd)
+		f.Init(c)
 	}
 
 	return c, nil
