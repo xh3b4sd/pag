@@ -6,11 +6,12 @@ import (
 )
 
 const (
-	Binary  = "protoc"
-	ArgsFmt = "--go-grpc_out=./%s/ --proto_path=./%s/ %s"
+	Binary = "protoc"
+	MsgArg = "--go_out=./%s/ --proto_path=./%s/ %s"
+	SvcArg = "--go-grpc_out=./%s/ --proto_path=./%s/ %s"
 )
 
-type Context struct {
+type Command struct {
 	// Arguments are the command line arguments appended to the binary used to
 	// generate language specific code for a gRPC api schema.
 	Arguments []string
@@ -40,6 +41,6 @@ type Context struct {
 //         pbf/user/search.proto \
 //         pbf/user/update.proto
 //
-func (c Context) String() string {
+func (c Command) String() string {
 	return fmt.Sprintf("%s %s", c.Binary, strings.Join(c.Arguments, " "))
 }

@@ -1,5 +1,5 @@
 package generate
 
 type Interface interface {
-	Generate() ([]Context, error)
+	Generate() ([]Command, error)
 }

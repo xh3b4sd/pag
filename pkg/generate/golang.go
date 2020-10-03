@@ -46,44 +46,41 @@ func NewGolang(config GolangConfig) (*Golang, error) {
 	return g, nil
 }
 
-func (g *Golang) Generate() ([]Context, error) {
+func (g *Golang) Generate() ([]Command, error) {
 	var dst string
 	{
-		dst = g.destination
-		if strings.HasPrefix(dst, "./") {
-			dst = dst[2:]
-		}
+		dst = strings.TrimPrefix(g.destination, "./")
 	}
 
-	dirs := map[string][]string{}
+	dir := map[string][]string{}
 	{
-		walkFunc := func(path string, info os.FileInfo, err error) error {
+		walkFunc := func(p string, i os.FileInfo, err error) error {
 			if err != nil {
 				return tracer.Mask(err)
 			}
 
-			if info.IsDir() && info.Name() == ".git" {
+			if i.IsDir() && i.Name() == ".git" {
 				return filepath.SkipDir
 			}
 
-			if info.IsDir() && info.Name() == ".github" {
+			if i.IsDir() && i.Name() == ".github" {
 				return filepath.SkipDir
 			}
 
 			// We do not want to track directories. We are interested in
 			// directories containing specific files.
-			if info.IsDir() {
+			if i.IsDir() {
 				return nil
 			}
 
 			// We do not want to track files with the wrong extension. We are
 			// interested in protocol buffer files having the ".proto"
 			// extension.
-			if filepath.Ext(info.Name()) != ".proto" {
+			if filepath.Ext(i.Name()) != ".proto" {
 				return nil
 			}
 
-			dirs[filepath.Dir(path)] = append(dirs[filepath.Dir(path)], filepath.Join(filepath.Dir(path), info.Name()))
+			dir[filepath.Dir(p)] = append(dir[filepath.Dir(p)], filepath.Join(filepath.Dir(p), i.Name()))
 
 			return nil
 		}
@@ -94,15 +91,18 @@ func (g *Golang) Generate() ([]Context, error) {
 		}
 	}
 
-	var ctxs []Context
-	for d, l := range dirs {
-		c := Context{
-			Binary:    Binary,
-			Arguments: strings.Split(fmt.Sprintf(ArgsFmt, filepath.Join(dst, d), d, strings.Join(l, " ")), " "),
-			Directory: filepath.Join(dst, d),
+	var ctxs []Command
+	for d, l := range dir {
+		c := func(f string) Command {
+			return Command{
+				Binary:    Binary,
+				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(dst, d), d, strings.Join(l, " ")), " "),
+				Directory: filepath.Join(dst, d),
+			}
 		}
 
-		ctxs = append(ctxs, c)
+		ctxs = append(ctxs, c(MsgArg))
+		ctxs = append(ctxs, c(SvcArg))
 	}
 
 	return ctxs, nil
