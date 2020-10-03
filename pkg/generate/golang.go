@@ -77,7 +77,8 @@ func (g *Golang) Generate() ([]Context, error) {
 			}
 
 			// We do not want to track files with the wrong extension. We are
-			// interested in protocol buffer files having the .proto extension.
+			// interested in protocol buffer files having the ".proto"
+			// extension.
 			if filepath.Ext(info.Name()) != ".proto" {
 				return nil
 			}

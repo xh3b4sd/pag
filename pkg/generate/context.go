@@ -12,10 +12,10 @@ const (
 
 type Context struct {
 	// Arguments are the command line arguments appended to the binary used to
-	// to generate language specific code for a gRPC api schema.
+	// generate language specific code for a gRPC api schema.
 	Arguments []string
 	// Binary is the binary used to generate language specific code for a gRPC
-	// api schema.
+	// api schema. Typically it should simply be "protoc".
 	Binary string
 	// Directory is the file system location in which language specific code
 	// will be generated into. This particular information is exposed because
