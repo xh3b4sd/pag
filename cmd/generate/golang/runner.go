@@ -2,6 +2,7 @@ package golang
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/exec"
 
@@ -68,8 +69,11 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 				return tracer.Mask(err)
 			}
 
-			_, err = exec.Command(c.Binary, c.Arguments...).CombinedOutput()
+			fmt.Printf("%#v\n", c.String())
+
+			out, err := exec.Command(c.Binary, c.Arguments...).CombinedOutput()
 			if err != nil {
+				fmt.Printf("%s\n", out)
 				return tracer.Mask(err)
 			}
 		}
