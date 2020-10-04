@@ -10,21 +10,21 @@ import (
 	"github.com/xh3b4sd/tracer"
 )
 
-type GolangConfig struct {
+type Config struct {
 	FileSystem afero.Fs
 
 	Destination string
 	Source      string
 }
 
-type Golang struct {
+type Generate struct {
 	fileSystem afero.Fs
 
 	destination string
 	source      string
 }
 
-func NewGolang(config GolangConfig) (*Golang, error) {
+func New(config Config) (*Generate, error) {
 	if config.FileSystem == nil {
 		return nil, tracer.Maskf(invalidConfigError, "%T.FileSystem must not be empty", config)
 	}
@@ -36,7 +36,7 @@ func NewGolang(config GolangConfig) (*Golang, error) {
 		return nil, tracer.Maskf(invalidConfigError, "%T.Source must not be empty", config)
 	}
 
-	g := &Golang{
+	g := &Generate{
 		fileSystem: config.FileSystem,
 
 		destination: config.Destination,
@@ -46,7 +46,7 @@ func NewGolang(config GolangConfig) (*Golang, error) {
 	return g, nil
 }
 
-func (g *Golang) Generate() ([]Command, error) {
+func (g *Generate) Generate() ([]Command, error) {
 	dir := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {

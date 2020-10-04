@@ -5,7 +5,9 @@ import (
 	"flag"
 	"io/ioutil"
 	"path/filepath"
+	"sort"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -14,16 +16,15 @@ import (
 
 var update = flag.Bool("update", false, "update .golden files")
 
-// TODO
-// Test_Generate_Golang tests the masking behaviour based on our Error type's JSON
-// output. The tests use golden file references. In case the golden files change
-// something is broken. In case intentional changes get introduced the golden
-// files have to be updated. In case the golden files have to be adjusted,
-// simply provide the -update flag when running the tests.
+// Test_Generate_Generate tests the protoc command generation. The protoc binary
+// is used to generate language specific code based on a gRPC apischema. The
+// generated protoc commands are executed in order to generate the actual
+// language specific code. The tests here ensure that the command execution with
+// its flags and positional arguments works as expected.
 //
-//     go test . -run Test_Generate_Golang -update
+//     go test ./... -run Test_Generate_Generate -update
 //
-func Test_Generate_Golang(t *testing.T) {
+func Test_Generate_Generate(t *testing.T) {
 	testCases := []struct {
 		fs  afero.Fs
 		dst string
@@ -161,14 +162,14 @@ func Test_Generate_Golang(t *testing.T) {
 
 			var g Interface
 			{
-				c := GolangConfig{
+				c := Config{
 					FileSystem: tc.fs,
 
 					Destination: tc.dst,
 					Source:      tc.src,
 				}
 
-				g, err = NewGolang(c)
+				g, err = New(c)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -180,8 +181,15 @@ func Test_Generate_Golang(t *testing.T) {
 			}
 
 			var actual string
-			for _, c := range l {
-				actual += c.String() + "\n"
+			{
+				var s []string
+				for _, c := range l {
+					s = append(s, c.String())
+				}
+
+				sort.Strings(s)
+
+				actual = strings.Join(s, "\n")
 			}
 
 			p := filepath.Join("testdata/generate", fileName(i))
@@ -197,8 +205,8 @@ func Test_Generate_Golang(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			if !bytes.Equal([]byte(actual), expected) {
-				t.Fatalf("\n\n%s\n", cmp.Diff(string(expected), string(actual)))
+			if !bytes.Equal(expected, []byte(actual)) {
+				t.Fatalf("\n\n%s\n", cmp.Diff(string(actual), string(expected)))
 			}
 		})
 	}

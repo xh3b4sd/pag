@@ -39,14 +39,14 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 
 	var g generate.Interface
 	{
-		c := generate.GolangConfig{
+		c := generate.Config{
 			FileSystem: afero.NewOsFs(),
 
 			Destination: r.flag.Destination,
 			Source:      r.flag.Source,
 		}
 
-		g, err = generate.NewGolang(c)
+		g, err = generate.New(c)
 		if err != nil {
 			return tracer.Mask(err)
 		}
