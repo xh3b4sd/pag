@@ -11,12 +11,12 @@ const (
 	// structs based on gRPC messages as of time of writing this. The code
 	// generation process is separate due to API changes and migration efforts
 	// in the upstream gRPC ecosystem.
-	MsgArg = "--go_out=./%s/ --proto_path=./%s/ %s"
+	MsgArg = "--go_out=%s/ --proto_path=%s/ %s"
 	// SvcArg is the specific argument string required in order to generate go
 	// interfaces based on gRPC services as of time of writing this. The code
 	// generation process is separate due to API changes and migration efforts
 	// in the upstream gRPC ecosystem.
-	SvcArg = "--go-grpc_out=./%s/ --proto_path=./%s/ %s"
+	SvcArg = "--go-grpc_out=%s/ --proto_path=%s/ %s"
 )
 
 type Command struct {
