@@ -1,0 +1,2 @@
+protoc --go_out=pkg/pbf/ --proto_path=pbf/ pbf/foo.proto
+protoc --go-grpc_out=pkg/pbf/ --proto_path=pbf/ pbf/foo.proto

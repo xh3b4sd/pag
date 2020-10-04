@@ -47,11 +47,6 @@ func NewGolang(config GolangConfig) (*Golang, error) {
 }
 
 func (g *Golang) Generate() ([]Command, error) {
-	var dst string
-	{
-		dst = strings.TrimPrefix(g.destination, "./")
-	}
-
 	dir := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {
@@ -91,19 +86,19 @@ func (g *Golang) Generate() ([]Command, error) {
 		}
 	}
 
-	var ctxs []Command
+	var cmds []Command
 	for d, l := range dir {
 		c := func(f string) Command {
 			return Command{
 				Binary:    Binary,
-				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(dst, d), d, strings.Join(l, " ")), " "),
-				Directory: filepath.Join(dst, d),
+				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(g.destination, d), d, strings.Join(l, " ")), " "),
+				Directory: filepath.Join(g.destination, d),
 			}
 		}
 
-		ctxs = append(ctxs, c(MsgArg))
-		ctxs = append(ctxs, c(SvcArg))
+		cmds = append(cmds, c(MsgArg))
+		cmds = append(cmds, c(SvcArg))
 	}
 
-	return ctxs, nil
+	return cmds, nil
 }
