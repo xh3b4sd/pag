@@ -189,7 +189,7 @@ func Test_Generate_Generate(t *testing.T) {
 
 				sort.Strings(s)
 
-				actual = strings.Join(s, "\n")
+				actual = strings.Join(s, "\n") + "\n"
 			}
 
 			p := filepath.Join("testdata/generate", fileName(i))
