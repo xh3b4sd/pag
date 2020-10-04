@@ -73,8 +73,7 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 
 			out, err := exec.Command(c.Binary, c.Arguments...).CombinedOutput()
 			if err != nil {
-				fmt.Printf("%s\n", out)
-				return tracer.Mask(err)
+				return tracer.Maskf(commandExecutionFailedError, "%s", out)
 			}
 		}
 	}
