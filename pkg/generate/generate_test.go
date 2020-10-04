@@ -36,8 +36,8 @@ func Test_Generate_Generate(t *testing.T) {
 			fs: func() afero.Fs {
 				fs := afero.NewMemMapFs()
 
-				fs.MkdirAll("pbf", 0755)
-				afero.WriteFile(fs, "pbf/foo.proto", nil, 0644)
+				mustCreateDir(fs, "pbf")
+				mustCreateFile(fs, "pbf/foo.proto")
 
 				return fs
 			}(),
@@ -51,11 +51,11 @@ func Test_Generate_Generate(t *testing.T) {
 			fs: func() afero.Fs {
 				fs := afero.NewMemMapFs()
 
-				fs.MkdirAll("pbf", 0755)
-				afero.WriteFile(fs, "pbf/foo.proto", nil, 0644)
+				mustCreateDir(fs, "pbf")
+				mustCreateFile(fs, "pbf/foo.proto")
 
-				fs.MkdirAll("pbf/post", 0755)
-				fs.MkdirAll("pbf/user", 0755)
+				mustCreateDir(fs, "pbf/post")
+				mustCreateDir(fs, "pbf/user")
 
 				return fs
 			}(),
@@ -68,14 +68,14 @@ func Test_Generate_Generate(t *testing.T) {
 			fs: func() afero.Fs {
 				fs := afero.NewMemMapFs()
 
-				fs.MkdirAll("pbf/post", 0755)
-				afero.WriteFile(fs, "pbf/post/api.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/post/create.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/post")
+				mustCreateFile(fs, "pbf/post/api.proto")
+				mustCreateFile(fs, "pbf/post/create.proto")
 
-				fs.MkdirAll("pbf/user", 0755)
-				afero.WriteFile(fs, "pbf/user/foo.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/bar.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/baz.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/user")
+				mustCreateFile(fs, "pbf/user/foo.proto")
+				mustCreateFile(fs, "pbf/user/bar.proto")
+				mustCreateFile(fs, "pbf/user/baz.proto")
 
 				return fs
 			}(),
@@ -89,14 +89,14 @@ func Test_Generate_Generate(t *testing.T) {
 			fs: func() afero.Fs {
 				fs := afero.NewMemMapFs()
 
-				fs.MkdirAll("pbf/post", 0755)
-				afero.WriteFile(fs, "pbf/post/api.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/post/create.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/post")
+				mustCreateFile(fs, "pbf/post/api.proto")
+				mustCreateFile(fs, "pbf/post/create.proto")
 
-				fs.MkdirAll("pbf/user", 0755)
-				afero.WriteFile(fs, "pbf/user/foo.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/bar.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/baz.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/user")
+				mustCreateFile(fs, "pbf/user/foo.proto")
+				mustCreateFile(fs, "pbf/user/bar.proto")
+				mustCreateFile(fs, "pbf/user/baz.proto")
 
 				return fs
 			}(),
@@ -110,19 +110,19 @@ func Test_Generate_Generate(t *testing.T) {
 			fs: func() afero.Fs {
 				fs := afero.NewMemMapFs()
 
-				fs.MkdirAll("pbf/post", 0755)
-				afero.WriteFile(fs, "pbf/post/api.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/post/create.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/post")
+				mustCreateFile(fs, "pbf/post/api.proto")
+				mustCreateFile(fs, "pbf/post/create.proto")
 
-				fs.MkdirAll("pbf/user", 0755)
-				afero.WriteFile(fs, "pbf/user/foo.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/bar.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/baz.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/user")
+				mustCreateFile(fs, "pbf/user/foo.proto")
+				mustCreateFile(fs, "pbf/user/bar.proto")
+				mustCreateFile(fs, "pbf/user/baz.proto")
 
-				fs.MkdirAll("pbf/more/deeply/nested", 0755)
-				afero.WriteFile(fs, "pbf/more/deeply/nested/foo.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/more/deeply/nested/bar.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/more/deeply/nested/baz.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/more/deeply/nested")
+				mustCreateFile(fs, "pbf/more/deeply/nested/foo.proto")
+				mustCreateFile(fs, "pbf/more/deeply/nested/bar.proto")
+				mustCreateFile(fs, "pbf/more/deeply/nested/baz.proto")
 
 				return fs
 			}(),
@@ -135,19 +135,19 @@ func Test_Generate_Generate(t *testing.T) {
 			fs: func() afero.Fs {
 				fs := afero.NewMemMapFs()
 
-				fs.MkdirAll("pbf/post", 0755)
-				afero.WriteFile(fs, "pbf/post/api.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/post/create.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/post")
+				mustCreateFile(fs, "pbf/post/api.proto")
+				mustCreateFile(fs, "pbf/post/create.proto")
 
-				fs.MkdirAll("pbf/user", 0755)
-				afero.WriteFile(fs, "pbf/user/foo.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/bar.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/user/baz.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/user")
+				mustCreateFile(fs, "pbf/user/foo.proto")
+				mustCreateFile(fs, "pbf/user/bar.proto")
+				mustCreateFile(fs, "pbf/user/baz.proto")
 
-				fs.MkdirAll("pbf/more/deeply/nested", 0755)
-				afero.WriteFile(fs, "pbf/more/deeply/nested/foo.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/more/deeply/nested/bar.proto", nil, 0644)
-				afero.WriteFile(fs, "pbf/more/deeply/nested/baz.proto", nil, 0644)
+				mustCreateDir(fs, "pbf/more/deeply/nested")
+				mustCreateFile(fs, "pbf/more/deeply/nested/foo.proto")
+				mustCreateFile(fs, "pbf/more/deeply/nested/bar.proto")
+				mustCreateFile(fs, "pbf/more/deeply/nested/baz.proto")
 
 				return fs
 			}(),
@@ -214,4 +214,18 @@ func Test_Generate_Generate(t *testing.T) {
 
 func fileName(i int) string {
 	return "case-" + strconv.Itoa(i) + ".golden"
+}
+
+func mustCreateDir(fs afero.Fs, p string) {
+	err := fs.MkdirAll(p, 0755)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func mustCreateFile(fs afero.Fs, p string) {
+	err := afero.WriteFile(fs, p, nil, 0644)
+	if err != nil {
+		panic(err)
+	}
 }
