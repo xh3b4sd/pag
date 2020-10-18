@@ -3,10 +3,11 @@ package file
 import "os"
 
 func Exists(file string) bool {
-	if _, err := os.Stat(file); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
+	_, err := os.Stat(file)
+	if os.IsNotExist(err) {
+		return false
+	} else if err != nil {
+		panic(err)
 	}
 
 	return true
