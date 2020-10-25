@@ -1,0 +1,2 @@
+protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --js_out=import_style=commonjs,binary:pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto

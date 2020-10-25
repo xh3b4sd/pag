@@ -11,7 +11,7 @@ import (
 	"github.com/xh3b4sd/tracer"
 
 	"github.com/xh3b4sd/pag/pkg/generate"
-	"github.com/xh3b4sd/pag/pkg/generate/golang"
+	"github.com/xh3b4sd/pag/pkg/generate/typescript"
 )
 
 type runner struct {
@@ -40,14 +40,14 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 
 	var g generate.Interface
 	{
-		c := golang.Config{
+		c := typescript.Config{
 			FileSystem: afero.NewOsFs(),
 
 			Destination: r.flag.Destination,
 			Source:      r.flag.Source,
 		}
 
-		g, err = golang.New(c)
+		g, err = typescript.New(c)
 		if err != nil {
 			return tracer.Mask(err)
 		}
