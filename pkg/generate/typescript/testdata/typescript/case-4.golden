@@ -1,0 +1,6 @@
+protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:/home/runner/tmp/pkg/pbf/more/deeply/nested/ --proto_path=pbf/more/deeply/nested/ pbf/more/deeply/nested/bar.proto pbf/more/deeply/nested/baz.proto pbf/more/deeply/nested/foo.proto
+protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:/home/runner/tmp/pkg/pbf/post/ --proto_path=pbf/post/ pbf/post/api.proto pbf/post/create.proto
+protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:/home/runner/tmp/pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --js_out=import_style=commonjs,binary:/home/runner/tmp/pkg/pbf/more/deeply/nested/ --proto_path=pbf/more/deeply/nested/ pbf/more/deeply/nested/bar.proto pbf/more/deeply/nested/baz.proto pbf/more/deeply/nested/foo.proto
+protoc --js_out=import_style=commonjs,binary:/home/runner/tmp/pkg/pbf/post/ --proto_path=pbf/post/ pbf/post/api.proto pbf/post/create.proto
+protoc --js_out=import_style=commonjs,binary:/home/runner/tmp/pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto

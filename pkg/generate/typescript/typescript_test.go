@@ -1,4 +1,4 @@
-package golang
+package typescript
 
 import (
 	"bytes"
@@ -18,15 +18,15 @@ import (
 
 var update = flag.Bool("update", false, "update .golden files")
 
-// Test_Golang_Generate tests the protoc command generation. The protoc binary
-// is used to generate language specific code based on a gRPC apischema. The
-// generated protoc commands are executed in order to generate the actual
+// Test_Typescript_Generate tests the protoc command generation. The protoc
+// binary is used to generate language specific code based on a gRPC apischema.
+// The generated protoc commands are executed in order to generate the actual
 // language specific code. The tests here ensure that the command execution with
 // its flags and positional arguments works as expected.
 //
-//     go test ./... -run Test_Golang_Generate -update
+//     go test ./... -run Test_Typescript_Generate -update
 //
-func Test_Golang_Generate(t *testing.T) {
+func Test_Typescript_Generate(t *testing.T) {
 	testCases := []struct {
 		fs  afero.Fs
 		dst string
@@ -194,7 +194,7 @@ func Test_Golang_Generate(t *testing.T) {
 				actual = strings.Join(s, "\n") + "\n"
 			}
 
-			p := filepath.Join("testdata/golang", fileName(i))
+			p := filepath.Join("testdata/typescript", fileName(i))
 			if *update {
 				err := ioutil.WriteFile(p, []byte(actual), 0600)
 				if err != nil {
