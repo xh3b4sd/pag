@@ -1,4 +1,4 @@
-package golang
+package typescript
 
 import (
 	"github.com/spf13/cobra"
@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	name  = "golang"
-	short = "Generate golang code based on a gRPC api schema."
-	long  = "Generate golang code based on a gRPC api schema."
+	name  = "typescript"
+	short = "Generate typescript code based on a gRPC api schema."
+	long  = "Generate typescript code based on a gRPC api schema."
 )
 
 type Config struct {
