@@ -5,20 +5,6 @@ import (
 	"strings"
 )
 
-const (
-	Binary = "protoc"
-	// MsgArg is the specific argument string required in order to generate go
-	// structs based on gRPC messages as of time of writing this. The code
-	// generation process is separate due to API changes and migration efforts
-	// in the upstream gRPC ecosystem.
-	MsgArg = "--go_out=%s/ --proto_path=%s/ %s"
-	// SvcArg is the specific argument string required in order to generate go
-	// interfaces based on gRPC services as of time of writing this. The code
-	// generation process is separate due to API changes and migration efforts
-	// in the upstream gRPC ecosystem.
-	SvcArg = "--go-grpc_out=%s/ --proto_path=%s/ %s"
-)
-
 type Command struct {
 	// Arguments are the command line arguments appended to the binary used to
 	// generate language specific code for a gRPC api schema.
@@ -34,9 +20,9 @@ type Command struct {
 }
 
 // String joins the binary and its arguments resulting in one concatenated
-// string representation of the complete executable command. Note the example
-// below and how the ".proto" files are provided as separate positional
-// arguments.
+// string representation of the complete executable command. Note the Golang
+// specific example below and how the ".proto" files are provided as separate
+// positional arguments.
 //
 //     protoc \
 //

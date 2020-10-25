@@ -1,4 +1,4 @@
-package generate
+package golang
 
 import (
 	"bytes"
@@ -12,19 +12,21 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/spf13/afero"
+
+	"github.com/xh3b4sd/pag/pkg/generate"
 )
 
 var update = flag.Bool("update", false, "update .golden files")
 
-// Test_Generate_Generate tests the protoc command generation. The protoc binary
+// Test_Golang_Generate tests the protoc command generation. The protoc binary
 // is used to generate language specific code based on a gRPC apischema. The
 // generated protoc commands are executed in order to generate the actual
 // language specific code. The tests here ensure that the command execution with
 // its flags and positional arguments works as expected.
 //
-//     go test ./... -run Test_Generate_Generate -update
+//     go test ./... -run Test_Golang_Generate -update
 //
-func Test_Generate_Generate(t *testing.T) {
+func Test_Golang_Generate(t *testing.T) {
 	testCases := []struct {
 		fs  afero.Fs
 		dst string
@@ -160,7 +162,7 @@ func Test_Generate_Generate(t *testing.T) {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			var err error
 
-			var g Interface
+			var g generate.Interface
 			{
 				c := Config{
 					FileSystem: tc.fs,
@@ -192,7 +194,7 @@ func Test_Generate_Generate(t *testing.T) {
 				actual = strings.Join(s, "\n") + "\n"
 			}
 
-			p := filepath.Join("testdata/generate", fileName(i))
+			p := filepath.Join("testdata/golang", fileName(i))
 			if *update {
 				err := ioutil.WriteFile(p, []byte(actual), 0644) // nolint:gosec
 				if err != nil {

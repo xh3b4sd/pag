@@ -1,4 +1,4 @@
-package generate
+package golang
 
 import (
 	"fmt"
@@ -8,6 +8,22 @@ import (
 
 	"github.com/spf13/afero"
 	"github.com/xh3b4sd/tracer"
+
+	"github.com/xh3b4sd/pag/pkg/generate"
+)
+
+const (
+	Binary = "protoc"
+	// MsgArg is the specific argument string required in order to generate go
+	// structs based on gRPC messages as of time of writing this. The code
+	// generation process is separate due to API changes and migration efforts
+	// in the upstream gRPC ecosystem.
+	MsgArg = "--go_out=%s/ --proto_path=%s/ %s"
+	// SvcArg is the specific argument string required in order to generate go
+	// interfaces based on gRPC services as of time of writing this. The code
+	// generation process is separate due to API changes and migration efforts
+	// in the upstream gRPC ecosystem.
+	SvcArg = "--go-grpc_out=%s/ --proto_path=%s/ %s"
 )
 
 type Config struct {
@@ -46,7 +62,7 @@ func New(config Config) (*Generate, error) {
 	return g, nil
 }
 
-func (g *Generate) Generate() ([]Command, error) {
+func (g *Generate) Generate() ([]generate.Command, error) {
 	dir := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {
@@ -86,10 +102,10 @@ func (g *Generate) Generate() ([]Command, error) {
 		}
 	}
 
-	var cmds []Command
+	var cmds []generate.Command
 	for d, l := range dir {
-		c := func(f string) Command {
-			return Command{
+		c := func(f string) generate.Command {
+			return generate.Command{
 				Binary:    Binary,
 				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(g.destination, d), d, strings.Join(l, " ")), " "),
 				Directory: filepath.Join(g.destination, d),
