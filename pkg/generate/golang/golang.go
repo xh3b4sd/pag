@@ -63,7 +63,34 @@ func New(config Config) (*Golang, error) {
 }
 
 func (g *Golang) Commands() ([]generate.Command, error) {
-	dir := map[string][]string{}
+	dirs, err := g.dirs(".proto")
+	if err != nil {
+		return nil, tracer.Mask(err)
+	}
+
+	var cmds []generate.Command
+	for d, l := range dirs {
+		c := func(f string) generate.Command {
+			return generate.Command{
+				Binary:    Binary,
+				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(g.destination, d), d, strings.Join(l, " ")), " "),
+				Directory: filepath.Join(g.destination, d),
+			}
+		}
+
+		cmds = append(cmds, c(MsgArg))
+		cmds = append(cmds, c(SvcArg))
+	}
+
+	return cmds, nil
+}
+
+func (g *Golang) Files() ([]generate.File, error) {
+	return nil, nil
+}
+
+func (g *Golang) dirs(exts ...string) (map[string][]string, error) {
+	dirs := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {
 			if err != nil {
@@ -87,11 +114,13 @@ func (g *Golang) Commands() ([]generate.Command, error) {
 			// We do not want to track files with the wrong extension. We are
 			// interested in protocol buffer files having the ".proto"
 			// extension.
-			if filepath.Ext(i.Name()) != ".proto" {
-				return nil
+			for _, e := range exts {
+				if filepath.Ext(i.Name()) != e {
+					return nil
+				}
 			}
 
-			dir[filepath.Dir(p)] = append(dir[filepath.Dir(p)], filepath.Join(filepath.Dir(p), i.Name()))
+			dirs[filepath.Dir(p)] = append(dirs[filepath.Dir(p)], filepath.Join(filepath.Dir(p), i.Name()))
 
 			return nil
 		}
@@ -102,23 +131,5 @@ func (g *Golang) Commands() ([]generate.Command, error) {
 		}
 	}
 
-	var cmds []generate.Command
-	for d, l := range dir {
-		c := func(f string) generate.Command {
-			return generate.Command{
-				Binary:    Binary,
-				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(g.destination, d), d, strings.Join(l, " ")), " "),
-				Directory: filepath.Join(g.destination, d),
-			}
-		}
-
-		cmds = append(cmds, c(MsgArg))
-		cmds = append(cmds, c(SvcArg))
-	}
-
-	return cmds, nil
-}
-
-func (g *Golang) Files() ([]generate.File, error) {
-	return nil, nil
+	return dirs, nil
 }
