@@ -54,7 +54,7 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 	}
 
 	{
-		l, err := g.Generate()
+		l, err := g.Commands()
 		if err != nil {
 			return tracer.Mask(err)
 		}

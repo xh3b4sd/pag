@@ -1,5 +1,6 @@
 package generate
 
 type Interface interface {
-	Generate() ([]Command, error)
+	Commands() ([]Command, error)
+	Files() ([]File, error)
 }

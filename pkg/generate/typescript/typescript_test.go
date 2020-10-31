@@ -18,15 +18,15 @@ import (
 
 var update = flag.Bool("update", false, "update .golden files")
 
-// Test_Typescript_Generate tests the protoc command generation. The protoc
+// Test_Typescript_Commands tests the protoc command generation. The protoc
 // binary is used to generate language specific code based on a gRPC apischema.
 // The generated protoc commands are executed in order to generate the actual
 // language specific code. The tests here ensure that the command execution with
 // its flags and positional arguments works as expected.
 //
-//     go test ./... -run Test_Typescript_Generate -update
+//     go test ./... -run Test_Typescript_Commands -update
 //
-func Test_Typescript_Generate(t *testing.T) {
+func Test_Typescript_Commands(t *testing.T) {
 	testCases := []struct {
 		fs  afero.Fs
 		dst string
@@ -177,7 +177,7 @@ func Test_Typescript_Generate(t *testing.T) {
 				}
 			}
 
-			l, err := g.Generate()
+			l, err := g.Commands()
 			if err != nil {
 				t.Fatal(err)
 			}
