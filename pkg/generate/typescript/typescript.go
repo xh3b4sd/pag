@@ -90,8 +90,6 @@ func (t *Typescript) Commands() ([]generate.Command, error) {
 }
 
 func (t *Typescript) Files() ([]generate.File, error) {
-	p := filepath.Join(t.destination, "index.ts")
-
 	d, err := t.dirs(".proto")
 	if err != nil {
 		return nil, tracer.Mask(err)
@@ -99,6 +97,8 @@ func (t *Typescript) Files() ([]generate.File, error) {
 
 	var l []generate.File
 	{
+		p := filepath.Join(t.destination, "index.ts")
+
 		b, err := t.render(p, indexTemplate, t.data(d))
 		if err != nil {
 			return nil, tracer.Mask(err)
