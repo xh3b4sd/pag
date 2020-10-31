@@ -1,11 +1,11 @@
 package typescript
 
-const indexTemplate = `#
-# Do not edit. This file was generated via the "pag" command line tool. More
-# information about the tool can be found at github.com/xh3b4sd/pag.
-#
-#     pag generate typescript
-#
+const indexTemplate = `//
+// Do not edit. This file was generated via the "pag" command line tool. More
+// information about the tool can be found at github.com/xh3b4sd/pag.
+//
+//     pag generate typescript
+//
 {{ range $r := . }}
 // -------------------------------------------------------------------------- //
 
