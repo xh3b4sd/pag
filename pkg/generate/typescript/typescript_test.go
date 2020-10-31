@@ -381,11 +381,9 @@ func Test_Typescript_Files(t *testing.T) {
 			{
 				var s []string
 				for _, f := range l {
-					s = append(s, f.Path)
 					s = append(s, string(f.Bytes))
+					s = append(s, f.Path)
 				}
-
-				sort.Strings(s)
 
 				actual = strings.Join(s, "\n") + "\n"
 			}
