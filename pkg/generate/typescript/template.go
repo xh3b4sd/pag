@@ -9,29 +9,29 @@ const indexTemplate = `#
 {{ range $r := . }}
 // -------------------------------------------------------------------------- //
 
-import * as {{ $r.Dir | ToExport }}Client  from "./{{ $r.Dir }}/ApiServiceClientPb";
-import * as {{ $r.Dir | ToExport }}Create  from "./{{ $r.Dir }}/create_pb";
-import * as {{ $r.Dir | ToExport }}Delete  from "./{{ $r.Dir }}/delete_pb";
-import * as {{ $r.Dir | ToExport }}Search  from "./{{ $r.Dir }}/search_pb";
-import * as {{ $r.Dir | ToExport }}Update  from "./{{ $r.Dir }}/update_pb";
+import * as {{ $r.Dir | ToResource }}Client  from "./{{ $r.Dir }}/ApiServiceClientPb";
+import * as {{ $r.Dir | ToResource }}Create  from "./{{ $r.Dir }}/create_pb";
+import * as {{ $r.Dir | ToResource }}Delete  from "./{{ $r.Dir }}/delete_pb";
+import * as {{ $r.Dir | ToResource }}Search  from "./{{ $r.Dir }}/search_pb";
+import * as {{ $r.Dir | ToResource }}Update  from "./{{ $r.Dir }}/update_pb";
 
-export const {{ $r.Dir | ToExport }} = {
-  Client:  {{ $r.Dir | ToExport }}Client.APIClient,
+export const {{ $r.Dir | ToResource }} = {
+  Client:  {{ $r.Dir | ToResource }}Client.APIClient,
   Create: {
-    I: {{ $r.Dir | ToExport }}Create.CreateI,
-    O: {{ $r.Dir | ToExport }}Create.CreateO,
+    I: {{ $r.Dir | ToResource }}Create.CreateI,
+    O: {{ $r.Dir | ToResource }}Create.CreateO,
   },
   Delete: {
-    I: {{ $r.Dir | ToExport }}Delete.DeleteI,
-    O: {{ $r.Dir | ToExport }}Delete.DeleteO,
+    I: {{ $r.Dir | ToResource }}Delete.DeleteI,
+    O: {{ $r.Dir | ToResource }}Delete.DeleteO,
   },
   Search: {
-    I: {{ $r.Dir | ToExport }}Search.SearchI,
-    O: {{ $r.Dir | ToExport }}Search.SearchO,
+    I: {{ $r.Dir | ToResource }}Search.SearchI,
+    O: {{ $r.Dir | ToResource }}Search.SearchO,
   },
   Update: {
-    I: {{ $r.Dir | ToExport }}Update.UpdateI,
-    O: {{ $r.Dir | ToExport }}Update.UpdateO,
+    I: {{ $r.Dir | ToResource }}Update.UpdateI,
+    O: {{ $r.Dir | ToResource }}Update.UpdateO,
   },
 }
 

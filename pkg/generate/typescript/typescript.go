@@ -178,13 +178,11 @@ func (t *Typescript) dirs(exts ...string) (map[string][]string, error) {
 
 func (t *Typescript) render(path string, tmpl string, data interface{}) ([]byte, error) {
 	f := template.FuncMap{
-		"ToExport": func(s string) string {
+		"ToResource": func(s string) string {
 			n := s
 
 			n = filepath.Base(n)
-			n = strings.ReplaceAll(n, "-", " ")
 			n = strings.Title(n)
-			n = strings.ReplaceAll(n, " ", "")
 
 			return n
 		},
