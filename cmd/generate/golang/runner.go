@@ -2,8 +2,10 @@ package golang
 
 import (
 	"context"
+	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
@@ -72,6 +74,29 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 			out, err := exec.Command(c.Binary, c.Arguments...).CombinedOutput()
 			if err != nil {
 				return tracer.Maskf(commandExecutionFailedError, "%s", out)
+			}
+		}
+	}
+
+	{
+		l, err := g.Files()
+		if err != nil {
+			return tracer.Mask(err)
+		}
+
+		for _, f := range l {
+			// The generated files may define arbitrary file paths on the file
+			// system. In order to be super save we simply ensure that the
+			// directory in which the generated file is supposed to be written
+			// to exists.
+			err := os.MkdirAll(filepath.Dir(f.Path), os.ModePerm)
+			if err != nil {
+				return tracer.Mask(err)
+			}
+
+			err = ioutil.WriteFile(f.Path, f.Bytes, 0600)
+			if err != nil {
+				return tracer.Mask(err)
 			}
 		}
 	}

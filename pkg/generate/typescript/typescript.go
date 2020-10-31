@@ -1,10 +1,13 @@
 package typescript
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+	"text/template"
 
 	"github.com/spf13/afero"
 	"github.com/xh3b4sd/tracer"
@@ -64,7 +67,72 @@ func New(config Config) (*Typescript, error) {
 }
 
 func (t *Typescript) Commands() ([]generate.Command, error) {
-	dir := map[string][]string{}
+	dirs, err := t.dirs(".proto")
+	if err != nil {
+		return nil, tracer.Mask(err)
+	}
+
+	var cmds []generate.Command
+	for d, l := range dirs {
+		c := func(f string) generate.Command {
+			return generate.Command{
+				Binary:    Binary,
+				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(t.destination, d), d, strings.Join(l, " ")), " "),
+				Directory: filepath.Join(t.destination, d),
+			}
+		}
+
+		cmds = append(cmds, c(JsArg))
+		cmds = append(cmds, c(TsArg))
+	}
+
+	return cmds, nil
+}
+
+func (t *Typescript) Files() ([]generate.File, error) {
+	d, err := t.dirs(".proto")
+	if err != nil {
+		return nil, tracer.Mask(err)
+	}
+
+	var l []generate.File
+	{
+		p := filepath.Join(t.destination, "index.ts")
+
+		b, err := t.render(p, indexTemplate, t.data(d))
+		if err != nil {
+			return nil, tracer.Mask(err)
+		}
+
+		f := generate.File{
+			Path:  p,
+			Bytes: b,
+		}
+
+		l = append(l, f)
+	}
+
+	return l, nil
+}
+
+func (t *Typescript) data(dirs map[string][]string) interface{} {
+	type Data struct {
+		Dir string
+	}
+
+	var data []Data
+
+	for d := range dirs {
+		data = append(data, Data{Dir: d})
+	}
+
+	sort.Slice(data, func(i, j int) bool { return data[i].Dir < data[j].Dir })
+
+	return data
+}
+
+func (t *Typescript) dirs(exts ...string) (map[string][]string, error) {
+	dirs := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {
 			if err != nil {
@@ -88,11 +156,13 @@ func (t *Typescript) Commands() ([]generate.Command, error) {
 			// We do not want to track files with the wrong extension. We are
 			// interested in protocol buffer files having the ".proto"
 			// extension.
-			if filepath.Ext(i.Name()) != ".proto" {
-				return nil
+			for _, e := range exts {
+				if filepath.Ext(i.Name()) != e {
+					return nil
+				}
 			}
 
-			dir[filepath.Dir(p)] = append(dir[filepath.Dir(p)], filepath.Join(filepath.Dir(p), i.Name()))
+			dirs[filepath.Dir(p)] = append(dirs[filepath.Dir(p)], filepath.Join(filepath.Dir(p), i.Name()))
 
 			return nil
 		}
@@ -103,23 +173,31 @@ func (t *Typescript) Commands() ([]generate.Command, error) {
 		}
 	}
 
-	var cmds []generate.Command
-	for d, l := range dir {
-		c := func(f string) generate.Command {
-			return generate.Command{
-				Binary:    Binary,
-				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(t.destination, d), d, strings.Join(l, " ")), " "),
-				Directory: filepath.Join(t.destination, d),
-			}
-		}
-
-		cmds = append(cmds, c(JsArg))
-		cmds = append(cmds, c(TsArg))
-	}
-
-	return cmds, nil
+	return dirs, nil
 }
 
-func (t *Typescript) Files() ([]generate.File, error) {
-	return nil, nil
+func (t *Typescript) render(path string, tmpl string, data interface{}) ([]byte, error) {
+	f := template.FuncMap{
+		"ToResource": func(s string) string {
+			n := s
+
+			n = filepath.Base(n)
+			n = strings.Title(n)
+
+			return n
+		},
+	}
+
+	s, err := template.New(path).Funcs(f).Parse(tmpl)
+	if err != nil {
+		return nil, tracer.Mask(err)
+	}
+
+	var b bytes.Buffer
+	err = s.ExecuteTemplate(&b, path, data)
+	if err != nil {
+		return nil, tracer.Mask(err)
+	}
+
+	return b.Bytes(), nil
 }
