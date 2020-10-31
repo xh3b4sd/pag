@@ -214,11 +214,10 @@ func Test_Typescript_Commands(t *testing.T) {
 	}
 }
 
-// Test_Typescript_Files tests the protoc command generation. The protoc
-// binary is used to generate language specific code based on a gRPC apischema.
-// The generated protoc commands are executed in order to generate the actual
-// language specific code. The tests here ensure that the command execution with
-// its flags and positional arguments works as expected.
+// Test_Typescript_Files tests the additional file generation. Especially
+// typescript needs additional assets so that the generated code can be properly
+// packaged and used. The tests here ensure that the additional file generation
+// works according to the gRPC apischema.
 //
 //     go test ./... -run Test_Typescript_Files -update
 //
