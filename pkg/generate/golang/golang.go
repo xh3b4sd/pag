@@ -33,14 +33,14 @@ type Config struct {
 	Source      string
 }
 
-type Generate struct {
+type Golang struct {
 	fileSystem afero.Fs
 
 	destination string
 	source      string
 }
 
-func New(config Config) (*Generate, error) {
+func New(config Config) (*Golang, error) {
 	if config.FileSystem == nil {
 		return nil, tracer.Maskf(invalidConfigError, "%T.FileSystem must not be empty", config)
 	}
@@ -52,7 +52,7 @@ func New(config Config) (*Generate, error) {
 		return nil, tracer.Maskf(invalidConfigError, "%T.Source must not be empty", config)
 	}
 
-	g := &Generate{
+	g := &Golang{
 		fileSystem: config.FileSystem,
 
 		destination: config.Destination,
@@ -62,7 +62,7 @@ func New(config Config) (*Generate, error) {
 	return g, nil
 }
 
-func (g *Generate) Generate() ([]generate.Command, error) {
+func (g *Golang) Commands() ([]generate.Command, error) {
 	dir := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {
@@ -117,4 +117,8 @@ func (g *Generate) Generate() ([]generate.Command, error) {
 	}
 
 	return cmds, nil
+}
+
+func (g *Golang) Files() ([]generate.File, error) {
+	return nil, nil
 }

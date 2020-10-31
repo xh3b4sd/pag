@@ -34,14 +34,14 @@ type Config struct {
 	Source      string
 }
 
-type Generate struct {
+type Typescript struct {
 	fileSystem afero.Fs
 
 	destination string
 	source      string
 }
 
-func New(config Config) (*Generate, error) {
+func New(config Config) (*Typescript, error) {
 	if config.FileSystem == nil {
 		return nil, tracer.Maskf(invalidConfigError, "%T.FileSystem must not be empty", config)
 	}
@@ -53,17 +53,17 @@ func New(config Config) (*Generate, error) {
 		return nil, tracer.Maskf(invalidConfigError, "%T.Source must not be empty", config)
 	}
 
-	g := &Generate{
+	t := &Typescript{
 		fileSystem: config.FileSystem,
 
 		destination: config.Destination,
 		source:      config.Source,
 	}
 
-	return g, nil
+	return t, nil
 }
 
-func (g *Generate) Generate() ([]generate.Command, error) {
+func (t *Typescript) Commands() ([]generate.Command, error) {
 	dir := map[string][]string{}
 	{
 		walkFunc := func(p string, i os.FileInfo, err error) error {
@@ -97,7 +97,7 @@ func (g *Generate) Generate() ([]generate.Command, error) {
 			return nil
 		}
 
-		err := afero.Walk(g.fileSystem, g.source, walkFunc)
+		err := afero.Walk(t.fileSystem, t.source, walkFunc)
 		if err != nil {
 			return nil, tracer.Mask(err)
 		}
@@ -108,8 +108,8 @@ func (g *Generate) Generate() ([]generate.Command, error) {
 		c := func(f string) generate.Command {
 			return generate.Command{
 				Binary:    Binary,
-				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(g.destination, d), d, strings.Join(l, " ")), " "),
-				Directory: filepath.Join(g.destination, d),
+				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(t.destination, d), d, strings.Join(l, " ")), " "),
+				Directory: filepath.Join(t.destination, d),
 			}
 		}
 
@@ -118,4 +118,8 @@ func (g *Generate) Generate() ([]generate.Command, error) {
 	}
 
 	return cmds, nil
+}
+
+func (t *Typescript) Files() ([]generate.File, error) {
+	return nil, nil
 }
