@@ -66,7 +66,7 @@ func (r *runner) run(ctx context.Context, cmd *cobra.Command, args []string) err
 			// file system management. We need to ensure the configured
 			// directory structure in advance so that the gRPC tooling can
 			// generate the language specific code into that.
-			err := os.MkdirAll(filepath.Dir(c.Directory), os.ModePerm)
+			err := os.MkdirAll(c.Directory, os.ModePerm)
 			if err != nil {
 				return tracer.Mask(err)
 			}
