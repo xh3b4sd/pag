@@ -11,7 +11,7 @@ type flag struct {
 }
 
 func (f *flag) Init(cmd *cobra.Command) {
-	cmd.Flags().StringVarP(&f.Destination, "destination", "d", "./pkg/", "Directory to put the generated golang code into.")
+	cmd.Flags().StringVarP(&f.Destination, "destination", "d", "./src/", "Directory to put the generated golang code into.")
 	cmd.Flags().StringVarP(&f.Source, "source", "s", ".", "Directory to look for the gRPC api schema definitions.")
 }
 

@@ -69,4 +69,4 @@ export const User = {
 
 
 
-pkg/index.ts
+src/index.ts

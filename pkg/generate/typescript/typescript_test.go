@@ -43,7 +43,7 @@ func Test_Typescript_Commands(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "./pkg/",
+			dst: "./src/",
 			src: ".",
 		},
 		// Case 1 ensures that a single proto file in a single directory is
@@ -81,7 +81,7 @@ func Test_Typescript_Commands(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "./pkg/",
+			dst: "./src/",
 			src: ".",
 		},
 		// Case 3 ensures that multiple proto files in multiple directories are
@@ -102,7 +102,7 @@ func Test_Typescript_Commands(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "pkg",
+			dst: "src",
 			src: ".",
 		},
 		// Case 4 ensures that multiple proto files in multiple directories are
@@ -128,7 +128,7 @@ func Test_Typescript_Commands(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "/home/runner/tmp/pkg/",
+			dst: "/home/runner/tmp/src/",
 			src: ".",
 		},
 		// Case 5 ensures that only proto files in the source directory are
@@ -153,7 +153,7 @@ func Test_Typescript_Commands(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "./pkg/",
+			dst: "./src/",
 			src: "./pbf/user/",
 		},
 	}
@@ -238,7 +238,7 @@ func Test_Typescript_Files(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "./pkg/",
+			dst: "./src/",
 			src: ".",
 		},
 		// Case 1 ensures that a single proto file in a single directory is
@@ -276,7 +276,7 @@ func Test_Typescript_Files(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "./pkg/",
+			dst: "./src/",
 			src: ".",
 		},
 		// Case 3 ensures that multiple proto files in multiple directories are
@@ -297,7 +297,7 @@ func Test_Typescript_Files(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "pkg",
+			dst: "src",
 			src: ".",
 		},
 		// Case 4 ensures that multiple proto files in multiple directories are
@@ -323,7 +323,7 @@ func Test_Typescript_Files(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "/home/runner/tmp/pkg/",
+			dst: "/home/runner/tmp/src/",
 			src: ".",
 		},
 		// Case 5 ensures that only proto files in the source directory are
@@ -348,7 +348,7 @@ func Test_Typescript_Files(t *testing.T) {
 
 				return fs
 			}(),
-			dst: "./pkg/",
+			dst: "./src/",
 			src: "./pbf/user/",
 		},
 	}

@@ -37,4 +37,4 @@ export const Pbf = {
 
 
 
-pkg/index.ts
+src/index.ts
