@@ -24,7 +24,7 @@ var update = flag.Bool("update", false, "update .golden files")
 // language specific code. The tests here ensure that the command execution with
 // its flags and positional arguments works as expected.
 //
-//     go test ./... -run Test_Typescript_Commands -update
+//     go test ./pkg/generate/typescript -run Test_Typescript_Commands -update
 //
 func Test_Typescript_Commands(t *testing.T) {
 	testCases := []struct {
@@ -402,7 +402,7 @@ func Test_Typescript_Files(t *testing.T) {
 			}
 
 			if !bytes.Equal(expected, []byte(actual)) {
-				t.Fatalf("\n\n%s\n", cmp.Diff(string(actual), string(expected)))
+				t.Fatalf("\n\n%s\n", cmp.Diff(string(expected), string(actual)))
 			}
 		})
 	}

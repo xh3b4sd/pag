@@ -1,2 +1,2 @@
-protoc --go-grpc_out=some/other/dir/pbf/ --proto_path=pbf/ pbf/foo.proto
-protoc --go_out=some/other/dir/pbf/ --proto_path=pbf/ pbf/foo.proto
+protoc --go-grpc_out=some/other/dir/pbf/ --proto_path=. pbf/foo.proto
+protoc --go_out=some/other/dir/pbf/ --proto_path=. pbf/foo.proto

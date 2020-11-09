@@ -1,6 +1,6 @@
-protoc --go-grpc_out=/home/runner/tmp/pkg/pbf/more/deeply/nested/ --proto_path=pbf/more/deeply/nested/ pbf/more/deeply/nested/bar.proto pbf/more/deeply/nested/baz.proto pbf/more/deeply/nested/foo.proto
-protoc --go-grpc_out=/home/runner/tmp/pkg/pbf/post/ --proto_path=pbf/post/ pbf/post/api.proto pbf/post/create.proto
-protoc --go-grpc_out=/home/runner/tmp/pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
-protoc --go_out=/home/runner/tmp/pkg/pbf/more/deeply/nested/ --proto_path=pbf/more/deeply/nested/ pbf/more/deeply/nested/bar.proto pbf/more/deeply/nested/baz.proto pbf/more/deeply/nested/foo.proto
-protoc --go_out=/home/runner/tmp/pkg/pbf/post/ --proto_path=pbf/post/ pbf/post/api.proto pbf/post/create.proto
-protoc --go_out=/home/runner/tmp/pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --go-grpc_out=/home/runner/tmp/pkg/pbf/more/deeply/nested/ --proto_path=. pbf/more/deeply/nested/bar.proto pbf/more/deeply/nested/baz.proto pbf/more/deeply/nested/foo.proto
+protoc --go-grpc_out=/home/runner/tmp/pkg/pbf/post/ --proto_path=. pbf/post/api.proto pbf/post/create.proto
+protoc --go-grpc_out=/home/runner/tmp/pkg/pbf/user/ --proto_path=. pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --go_out=/home/runner/tmp/pkg/pbf/more/deeply/nested/ --proto_path=. pbf/more/deeply/nested/bar.proto pbf/more/deeply/nested/baz.proto pbf/more/deeply/nested/foo.proto
+protoc --go_out=/home/runner/tmp/pkg/pbf/post/ --proto_path=. pbf/post/api.proto pbf/post/create.proto
+protoc --go_out=/home/runner/tmp/pkg/pbf/user/ --proto_path=. pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto

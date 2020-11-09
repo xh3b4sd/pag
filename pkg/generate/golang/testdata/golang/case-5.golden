@@ -1,2 +1,2 @@
-protoc --go-grpc_out=pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
-protoc --go_out=pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --go-grpc_out=pkg/pbf/user/ --proto_path=./pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --go_out=pkg/pbf/user/ --proto_path=./pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto

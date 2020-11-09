@@ -1,4 +1,4 @@
-protoc --go-grpc_out=pkg/pbf/post/ --proto_path=pbf/post/ pbf/post/api.proto pbf/post/create.proto
-protoc --go-grpc_out=pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
-protoc --go_out=pkg/pbf/post/ --proto_path=pbf/post/ pbf/post/api.proto pbf/post/create.proto
-protoc --go_out=pkg/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --go-grpc_out=pkg/pbf/post/ --proto_path=. pbf/post/api.proto pbf/post/create.proto
+protoc --go-grpc_out=pkg/pbf/user/ --proto_path=. pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --go_out=pkg/pbf/post/ --proto_path=. pbf/post/api.proto pbf/post/create.proto
+protoc --go_out=pkg/pbf/user/ --proto_path=. pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto

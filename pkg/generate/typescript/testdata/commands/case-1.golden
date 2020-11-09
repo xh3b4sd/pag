@@ -1,2 +1,2 @@
-protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:some/other/dir/pbf/ --proto_path=pbf/ pbf/foo.proto
-protoc --js_out=import_style=commonjs,binary:some/other/dir/pbf/ --proto_path=pbf/ pbf/foo.proto
+protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:some/other/dir/pbf/ --proto_path=. pbf/foo.proto
+protoc --js_out=import_style=commonjs,binary:some/other/dir/pbf/ --proto_path=. pbf/foo.proto

@@ -1,2 +1,2 @@
-protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:src/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
-protoc --js_out=import_style=commonjs,binary:src/pbf/user/ --proto_path=pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --grpc-web_out=import_style=typescript,mode=grpcwebtext:src/pbf/user/ --proto_path=./pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
+protoc --js_out=import_style=commonjs,binary:src/pbf/user/ --proto_path=./pbf/user/ pbf/user/bar.proto pbf/user/baz.proto pbf/user/foo.proto
