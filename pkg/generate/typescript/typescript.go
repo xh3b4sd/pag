@@ -22,12 +22,12 @@ const (
 	// this it is still necessary to generate this code via two separate steps
 	// since the upstream ecosystem is migrating towards typescript code
 	// generation.
-	JsArg = "--js_out=import_style=commonjs,binary:%s/ --proto_path=%s %s"
+	JsArg = "--js_out=import_style=commonjs,binary:%s --proto_path=%s %s"
 	// TsArg is the specific argument string required in order to generate
 	// typescript code based on a gRPC api schema. As of time of writing this it
 	// is still necessary to generate this code via two separate steps since the
 	// upstream ecosystem is migrating towards typescript code generation.
-	TsArg = "--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s/ --proto_path=%s %s"
+	TsArg = "--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s --proto_path=%s %s"
 )
 
 type Config struct {
@@ -73,12 +73,12 @@ func (t *Typescript) Commands() ([]generate.Command, error) {
 	}
 
 	var cmds []generate.Command
-	for d, l := range dirs {
+	for _, l := range dirs {
 		c := func(f string) generate.Command {
 			return generate.Command{
 				Binary:    Binary,
-				Arguments: strings.Split(fmt.Sprintf(f, filepath.Join(t.destination, d), t.source, strings.Join(l, " ")), " "),
-				Directory: filepath.Join(t.destination, d),
+				Arguments: strings.Split(fmt.Sprintf(f, t.destination, t.source, strings.Join(l, " ")), " "),
+				Directory: t.destination,
 			}
 		}
 
