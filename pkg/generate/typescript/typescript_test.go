@@ -208,7 +208,7 @@ func Test_Typescript_Commands(t *testing.T) {
 			}
 
 			if !bytes.Equal(expected, []byte(actual)) {
-				t.Fatalf("\n\n%s\n", cmp.Diff(string(actual), string(expected)))
+				t.Fatalf("\n\n%s\n", cmp.Diff(string(expected), string(actual)))
 			}
 		})
 	}
