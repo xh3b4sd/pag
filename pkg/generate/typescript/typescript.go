@@ -22,12 +22,12 @@ const (
 	// this it is still necessary to generate this code via two separate steps
 	// since the upstream ecosystem is migrating towards typescript code
 	// generation.
-	JsArg = "--js_out=import_style=commonjs,binary:%s --proto_path=%s %s"
+	JsArg = "--experimental_allow_proto3_optional --js_out=import_style=commonjs,binary:%s --proto_path=%s %s"
 	// TsArg is the specific argument string required in order to generate
 	// typescript code based on a gRPC api schema. As of time of writing this it
 	// is still necessary to generate this code via two separate steps since the
 	// upstream ecosystem is migrating towards typescript code generation.
-	TsArg = "--grpc-web_out=import_style=typescript,mode=grpcwebtext:%s --proto_path=%s %s"
+	TsArg = "--experimental_allow_proto3_optional --grpc-web_out=import_style=typescript,mode=grpcwebtext:%s --proto_path=%s %s"
 )
 
 type Config struct {
